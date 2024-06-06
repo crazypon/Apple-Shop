@@ -1,0 +1,23 @@
+spring:
+    datasource:
+        hikari:
+            connectionTimeout: 20000
+            maximumPoolSize: 5
+        url: jdbc:postgresql://localhost:5432/apple_crypto
+        username: jarvis
+        password: ilnur@089
+
+    jpa:
+        hibernate:
+            ddl-auto: create-drop
+        show-sql: true
+        defer-datasource-initialization: true
+    sql:
+        init:
+            mode: always
+
+logging:
+    level:
+        org:
+            springframework:
+                security: TRACE
