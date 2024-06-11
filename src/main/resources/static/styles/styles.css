@@ -1,0 +1,17 @@
+h1 {
+    color: blue;
+    margin-bottom: 50px;
+    margin-left: 50px;
+    margin-top: 50px;
+    background-color: black;
+    position: relative;
+}
+
+.product_place {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+/* .card {
+    margin: 10px;
+} */

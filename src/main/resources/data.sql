@@ -1,17 +1,10 @@
-insert into product (name, description, price, ssd, ram)
-                values("Iphone 15 Pro Max", "Apple's cutting edge phone", 1500, 256, 8);
-insert into product (name, description, price, ssd, ram)
-                values("Iphone 14 Pro Max", "Apple's cutting edge phone", 1800, 512, 4);
-insert into product (name, description, price, ssd, ram)
-                values("Iphone 13 Pro Max", "Apple's cutting edge phone", 1500, 256, 4);
-insert into product (name, description, price, ssd, ram)
-                values("Iphone XS", "Apple's cutting edge phone", 1500, 128, 8);
-insert into product (name, description, price, ssd, ram)
-                values("Iphone 12 Pro", "Apple's cutting edge phone", 1500, 256, 4);
-insert into product (name, description, price, ssd, ram)
-                values("Iphone 11 Pro Max", "Apple's cutting edge phone", 1500, 1024, 8);
-insert into product (name, description, price, ssd, ram)
-                values("Iphone 13 Mini", "Apple's cutting edge phone", 1500, 512, 8);
-
-
-
+insert into apple_products (product_name, product_description, price, ssd, ram)
+    values ('AppleWatch', 'Some watches', 1200, 32, 2);
+insert into apple_products (product_name, product_description, price, ssd, ram)
+    values ('Iphone 15 Pro Max', 'Some watches', 1500, 512, 12);
+insert into apple_products (product_name, product_description, price, ssd, ram)
+    values ('Iphone 13 pro', 'Some watches', 1000, 128, 6);
+insert into apple_products (product_name, product_description, price, ssd, ram)
+    values ('Ipad Pro 2023', 'Cutting edge phone', 1200, 256, 8);
+insert into apple_products (product_name, product_description, price, ssd, ram)
+    values ('Macbook Pro 2024', 'Best Laptop', 2000, 1024, 32);

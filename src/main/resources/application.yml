@@ -6,6 +6,7 @@ spring:
         url: jdbc:postgresql://localhost:5432/apple_crypto
         username: jarvis
         password: ilnur@089
+        initialize: false
 
     jpa:
         hibernate:
