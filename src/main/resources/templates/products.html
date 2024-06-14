@@ -22,9 +22,9 @@
           <li th:text="${product.ram}" class="list-group-item">Price: $2000</li>
         </ul>
 
-        <form th:action="@{products}" method="post">
-          <button name="foo" value="upvote" class="btn btn-primary">buy</button>
-      </form>
+        <form th:action="@{products}" method="POST">
+          <button name="productId"th:value="${product.id}" class="btn btn-primary">buy</button>
+        </form>
 
       </div>
     </div>

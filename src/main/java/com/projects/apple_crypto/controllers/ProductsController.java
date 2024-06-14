@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.projects.apple_crypto.entities.Customer;
 import com.projects.apple_crypto.entities.ProductRepo;
@@ -20,13 +21,15 @@ public class ProductsController {
 
 
     @PostMapping
-    public String redirectToPayment(Model model) {
+    public String redirectToPayment(@RequestParam("productId") long productId, Model model) {
         Customer customer = new Customer();
         model.addAttribute("customer", customer);
+        model.addAttribute("productId", productId);
+        System.out.println("Before putting id into thymleaf: " + productId);
         return "payment";
     }
 
-    // This is not for get request, this is for linking to another page 
+    
     @GetMapping
     public String showProducts(Model model) {
         model.addAttribute("products", productRepo.findAll());
