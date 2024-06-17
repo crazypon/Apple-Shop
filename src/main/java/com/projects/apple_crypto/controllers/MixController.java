@@ -9,5 +9,6 @@ public class MixController implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry view) {
         view.addViewController("/").setViewName("home");
+        view.addViewController("/login").setViewName("login");
     }
 }

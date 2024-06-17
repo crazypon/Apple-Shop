@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppleCrypto</title>
+</head>
+<body>
+    <h1>Hello New User!</h1>
+    
+    <br>
+    <br>
+    
+    <form th:action="@{registration}" th:object="${userForm}" method="POST" >
+        <label for="userName">Enter your username:</label>
+        <input type="text" th:field="*{userName}">
+        <br>
+        <label for="firstName">Enter your name:</label>
+        <input type="text" th:field="*{firstName}">
+        <br>
+        <label for="lastName">Enter your surname: </label>
+        <input type="text" th:field="*{lastName}">
+        <br>
+        <label for="password">Enter your password: </label>
+        <input type="text" th:field="*{password}">
+        <br>
+        <label for="retypedPassword">Retype your password: </label>
+        <input type="text" th:field="*{passwordConfirm}">
+        <br>
+        <input type="submit" vadlue="Submit">
+    </form>
+    
+</body>
+</html>

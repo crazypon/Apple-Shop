@@ -33,8 +33,6 @@ public class PaymentController {
     
     @PostMapping
     public String paymentSuccess(@ModelAttribute Customer customer, @RequestParam("productId") Long productId, Model model) {
-
-        System.out.println("Inside Post Mapping Controller in Success");
         // saving customer
         customerRepo.save(customer);
 
