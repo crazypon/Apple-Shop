@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.projects.apple_crypto.entities.Customer;
+import com.projects.apple_crypto.entities.User;
 import com.projects.apple_crypto.entities.ProductRepo;
 
 
@@ -22,8 +22,8 @@ public class ProductsController {
 
     @PostMapping
     public String redirectToPayment(@RequestParam("productId") long productId, Model model) {
-        Customer customer = new Customer();
-        model.addAttribute("customer", customer);
+        User user = new User();
+        model.addAttribute("customer", user);
         model.addAttribute("productId", productId);
         System.out.println("Before putting id into thymleaf: " + productId);
         return "payment";

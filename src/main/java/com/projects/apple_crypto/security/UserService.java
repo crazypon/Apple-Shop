@@ -6,14 +6,21 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.projects.apple_crypto.entities.Customer;
-import com.projects.apple_crypto.entities.CustomerRepository;
+import com.projects.apple_crypto.entities.User;
+import com.projects.apple_crypto.entities.UserRepository;
+import com.projects.apple_crypto.dtos.LoginUserDto;
+import com.projects.apple_crypto.dtos.RegisterUserDto;
 import com.projects.apple_crypto.entities.Role;
 import com.projects.apple_crypto.entities.RoleRepository;
 
@@ -22,53 +29,87 @@ import jakarta.persistence.PersistenceContext;
 
 
 @Service
-public class UserService implements UserDetailsService{
+public class UserService {
 
     @PersistenceContext
     EntityManager em;
 
     @Autowired
-    CustomerRepository customerRepo;
+    UserRepository userRepository;
 
     @Autowired
     RoleRepository roleRepo;
+
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Customer user = customerRepo.findByFirstName(username);
-
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-
-        return user;
+    @Bean
+    UserDetailsService userDetailsService() {
+        return username -> userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    public Customer findUserById(Long userId) {
-        Optional<Customer> userFromDb = customerRepo.findById(userId);
-        return userFromDb.orElse(new Customer());
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 
-    public List<Customer> allUsers() {
-        return (List<Customer>) customerRepo.findAll();
+    @Bean
+    AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(bCryptPasswordEncoder());
+
+        return authProvider;
     }
 
-    public boolean saveUser(Customer customer) {
-        Customer userFromDB = customerRepo.findByFirstName(customer.getUsername());
+
+    public User findUserById(Long userId) {
+        Optional<User> userFromDb = userRepository.findById(userId);
+        return userFromDb.orElse(new User());
+    }
+
+    public List<User> allUsers() {
+        return (List<User>) userRepository.findAll();
+    }
+
+    public boolean saveUser(User user) {
+        User userFromDB = userRepository.findByUsername(user.getUsername()).orElseThrow();
 
         if (userFromDB != null) {
             return false;
         }
 
-        customer.setRoles(Collections.singleton(new Role("ROLE_USER")));
-        customer.setPassword(bCryptPasswordEncoder().encode(customer.getPassword()));
-        customerRepo.save(customer);
+        user.setRoles(Collections.singleton(new Role("ROLE_USER")));
+        user.setPassword(bCryptPasswordEncoder().encode(user.getPassword()));
+        userRepository.save(user);
         return true;
     }
+
+    public User authenticate(LoginUserDto input, AuthenticationManager authenticationManager) {
+    authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                    input.getUsername(),
+                    input.getPassword()
+            )
+    );
+
+    return userRepository.findByUsername(input.getUsername()).orElseThrow();
+
+    }
+
+    public User signup(RegisterUserDto input) {
+    User user = new User();
+    user.setFullName(input.getFullName());
+    user.setUsername(input.getUsername());
+    user.setPassword(bCryptPasswordEncoder().encode(input.getPassword()));
+
+    return userRepository.save(user);
+}
+
 }
 

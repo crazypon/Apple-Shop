@@ -29,7 +29,7 @@ public class Role implements GrantedAuthority{
 
     @Transient
     @ManyToMany(mappedBy = "roles")
-    private Set<Customer> customers;
+    private Set<User> users;
 
     @Override
     public String getAuthority() {

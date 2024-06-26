@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.projects.apple_crypto.entities.AppleCryptoOrder;
-import com.projects.apple_crypto.entities.Customer;
-import com.projects.apple_crypto.entities.CustomerRepository;
+import com.projects.apple_crypto.entities.User;
+import com.projects.apple_crypto.entities.UserRepository;
 import com.projects.apple_crypto.entities.OrderRepository;
 
 
@@ -21,7 +21,7 @@ import com.projects.apple_crypto.entities.OrderRepository;
 public class PaymentController {
 
     @Autowired
-    CustomerRepository customerRepo;
+    UserRepository userRepo;
 
     @Autowired
     OrderRepository orderRepo;
@@ -32,13 +32,12 @@ public class PaymentController {
     }
     
     @PostMapping
-    public String paymentSuccess(@ModelAttribute Customer customer, @RequestParam("productId") Long productId, Model model) {
+    public String paymentSuccess(@ModelAttribute User user, @RequestParam("productId") Long productId, Model model) {
         // saving customer
-        customerRepo.save(customer);
+        userRepo.save(user);
 
         // saving order
-        System.out.println("Here is product Id" + productId);
-        AppleCryptoOrder order = new AppleCryptoOrder(customer.getId(), productId);
+        AppleCryptoOrder order = new AppleCryptoOrder(user.getId(), productId);
         orderRepo.save(order);
 
         return "success";

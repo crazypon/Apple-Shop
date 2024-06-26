@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.projects.apple_crypto.entities.Customer;
+import com.projects.apple_crypto.entities.User;
 import com.projects.apple_crypto.security.UserService;
 
 @Controller
@@ -21,19 +21,19 @@ public class RegistrationController {
     @GetMapping
     public String registrationPage(Model model) {
         System.out.println("In Registration Controller");
-        model.addAttribute("userForm", new Customer());
+        model.addAttribute("userForm", new User());
         return "registration";
     }
 
     @PostMapping
-    public String successRegistryPage(@ModelAttribute("userForm") Customer customer) {
+    public String successRegistryPage(@ModelAttribute("userForm") User user) {
 
-        if (!customer.getPassword().equals(customer.getPasswordConfirm())) {
+        if (!user.getPassword().equals(user.getPasswordConfirm())) {
             System.out.println("EEERRRRRORRRRR passwords are not the sameeee!");
             return "registration";
         }
 
-        if (!userService.saveUser(customer)) {
+        if (!userService.saveUser(user)) {
             System.out.println("EEERRRRORRRR this username is busy!!!");
             return "registration";
         }

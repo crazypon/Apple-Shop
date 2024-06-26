@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PUBLIC, force=true)
 @Table(name="users")
-public class Customer implements UserDetails{
+public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,9 +36,11 @@ public class Customer implements UserDetails{
 
     private String lastName;
 
-    private String userName;
+    private String username;
 
     private String password;
+
+    private String fullName;
 
     @Transient
     private String passwordConfirm;
@@ -64,12 +66,9 @@ public class Customer implements UserDetails{
 
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
 
-    public String getUserName() {
-        return userName;
-    }
 
     @Override
     public boolean isAccountNonExpired() {
