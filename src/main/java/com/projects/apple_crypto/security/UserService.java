@@ -91,24 +91,25 @@ public class UserService {
     }
 
     public User authenticate(LoginUserDto input, AuthenticationManager authenticationManager) {
-    authenticationManager.authenticate(
+        authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                     input.getUsername(),
                     input.getPassword()
             )
-    );
+        );
 
     return userRepository.findByUsername(input.getUsername()).orElseThrow();
 
     }
 
     public User signup(RegisterUserDto input) {
-    User user = new User();
-    user.setFullName(input.getFullName());
-    user.setUsername(input.getUsername());
-    user.setPassword(bCryptPasswordEncoder().encode(input.getPassword()));
+        User user = new User();
+        user.setFullName(input.getFullName());
+        user.setUsername(input.getUsername());
+        user.setRoles(Collections.singleton(new Role("ROLE_USER")));
+        user.setPassword(bCryptPasswordEncoder().encode(input.getPassword()));
 
-    return userRepository.save(user);
+        return userRepository.save(user);
 }
 
 }

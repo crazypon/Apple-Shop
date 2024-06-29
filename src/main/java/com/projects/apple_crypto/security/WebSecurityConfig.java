@@ -11,8 +11,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -41,14 +43,16 @@ public class WebSecurityConfig {
         httpSecurity
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(request -> request
-                .requestMatchers("/payment", "/products").hasRole("USER")
+                .requestMatchers("/payment", "/products", "/auth/check").hasRole("USER")
                 .requestMatchers("/", "/**").permitAll()
             )
             .formLogin(form -> form
                 .loginPage("/login")
                 .defaultSuccessUrl("/products")
             )
-            .httpBasic(Customizer.withDefaults());
+            .httpBasic(Customizer.withDefaults())
+            .authenticationProvider(authenticationProvider)
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
@@ -67,10 +71,5 @@ public class WebSecurityConfig {
 
         return source;
     }
-
-    // @Autowired
-    // protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    //     auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
-    // }
 
 }
