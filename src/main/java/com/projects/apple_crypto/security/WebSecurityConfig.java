@@ -51,8 +51,9 @@ public class WebSecurityConfig {
                 .defaultSuccessUrl("/products")
             )
             .httpBasic(Customizer.withDefaults())
-            .authenticationProvider(authenticationProvider)
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+            .authenticationProvider(authenticationProvider);
+            // This is filter for JWT
+            // .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }

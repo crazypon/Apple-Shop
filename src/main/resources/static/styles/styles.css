@@ -12,6 +12,10 @@ h1 {
     margin-right: 50px;
 }
 
+.errors {
+    color: red;
+}
+
 /* .card {
     margin: 10px;
 } */

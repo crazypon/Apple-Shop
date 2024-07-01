@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AppleCrypto</title>
+    <link rel="stylesheet" th:href="@{../styles/styles.css}">
 </head>
 <body>
     <h1>Hello New User!</h1>
@@ -13,19 +14,25 @@
     
     <form th:action="@{registration}" th:object="${userForm}" method="POST" >
         <label for="userName">Enter your username:</label>
-        <input type="text" th:field="*{userName}">
+        <input type="text" th:field="*{username}">
+        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="errors"></span>
+        <span class="errors" th:text="${uniqueUsernameError}"></span>
         <br>
         <label for="firstName">Enter your name:</label>
         <input type="text" th:field="*{firstName}">
+        <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="errors"></span>
         <br>
         <label for="lastName">Enter your surname: </label>
         <input type="text" th:field="*{lastName}">
+        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="errors"></span>
         <br>
         <label for="password">Enter your password: </label>
         <input type="text" th:field="*{password}">
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="errors"></span>
         <br>
         <label for="retypedPassword">Retype your password: </label>
         <input type="text" th:field="*{passwordConfirm}">
+        <span class="errors" th:text="${passwordError}"></span>
         <br>
         <input type="submit" vadlue="Submit">
     </form>

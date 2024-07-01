@@ -78,11 +78,11 @@ public class UserService {
     }
 
     public boolean saveUser(User user) {
-        User userFromDB = userRepository.findByUsername(user.getUsername()).orElseThrow();
 
-        if (userFromDB != null) {
+        User existingUser = userRepository.findByUsername(user.getUsername()).orElse(null);
+        if (existingUser != null) 
             return false;
-        }
+
 
         user.setRoles(Collections.singleton(new Role("ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder().encode(user.getPassword()));
@@ -104,13 +104,14 @@ public class UserService {
 
     public User signup(RegisterUserDto input) {
         User user = new User();
-        user.setFullName(input.getFullName());
         user.setUsername(input.getUsername());
         user.setRoles(Collections.singleton(new Role("ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder().encode(input.getPassword()));
 
         return userRepository.save(user);
-}
+    }
+
+
 
 }
 

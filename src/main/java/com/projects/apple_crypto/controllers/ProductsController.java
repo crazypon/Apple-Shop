@@ -1,6 +1,7 @@
 package com.projects.apple_crypto.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +23,6 @@ public class ProductsController {
 
     @PostMapping
     public String redirectToPayment(@RequestParam("productId") long productId, Model model) {
-        User user = new User();
-        model.addAttribute("customer", user);
         model.addAttribute("productId", productId);
         System.out.println("Before putting id into thymleaf: " + productId);
         return "payment";
@@ -31,7 +30,7 @@ public class ProductsController {
 
     
     @GetMapping
-    public String showProducts(Model model) {
+    public String showProducts(Model model, Authentication authentication) {
         model.addAttribute("products", productRepo.findAll());
         return "products";
     }
