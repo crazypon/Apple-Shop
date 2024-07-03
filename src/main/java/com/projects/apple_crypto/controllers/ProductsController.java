@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.projects.apple_crypto.entities.User;
 import com.projects.apple_crypto.entities.ProductRepo;
 
 

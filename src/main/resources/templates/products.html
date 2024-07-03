@@ -25,7 +25,9 @@
         <form th:action="@{products}" method="POST">
           <button name="productId"th:value="${product.id}" class="btn btn-primary">buy</button>
         </form>
-
+        <form th:action="@{cart}" method="POST">
+          <button name="productId" th:value="${product.id}" class="btn btn-primary">Add To Cart</button>
+        </form>
       </div>
     </div>
 
