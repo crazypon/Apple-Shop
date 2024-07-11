@@ -77,6 +77,8 @@ public class UserService {
         return (List<User>) userRepository.findAll();
     }
 
+    private boolean isAdminCreated = false;
+    
     public boolean saveUser(User user) {
 
         User existingUser = userRepository.findByUsername(user.getUsername()).orElse(null);
@@ -87,6 +89,10 @@ public class UserService {
         user.setRoles(Collections.singleton(new Role("ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
+
+        // creating admin
+        createAdmin();
+
         return true;
     }
 
@@ -102,6 +108,8 @@ public class UserService {
 
     }
 
+
+
     public User signup(RegisterUserDto input) {
         User user = new User();
         user.setUsername(input.getUsername());
@@ -109,6 +117,20 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder().encode(input.getPassword()));
 
         return userRepository.save(user);
+    }
+
+    public void createAdmin() {
+        if (isAdminCreated) {
+            return;
+        }
+
+        User admin = new User();
+        admin.setUsername("admin");
+        admin.setRoles(Collections.singleton(new Role("ROLE_ADMIN")));
+        admin.setPassword(bCryptPasswordEncoder().encode("admin"));
+
+        userRepository.save(admin);
+        isAdminCreated = true;
     }
 
 

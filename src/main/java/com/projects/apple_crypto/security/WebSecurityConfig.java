@@ -44,8 +44,20 @@ public class WebSecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(request -> request
                 .requestMatchers("/payment", "/products", "/auth/check").hasRole("USER")
+                .requestMatchers("/admin").hasRole("ADMIN")
                 .requestMatchers("/", "/**").permitAll()
             )
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                // .expiredUrl("/sessionExpired")
+                .invalidSessionUrl("/invalidSession")
+                // protection against fixation (migrateSession strategy is by default, this line of code is useless)
+                // migrateSession - on authentication new session is created and the old one is invalidated, however 
+                // the values from previous one are copied (which means only one device can be at a time)
+                // none - the original session will not be invalidated
+                // newSession - a clean session will be created without attributes of the old one
+                .sessionFixation().migrateSession())
+
             .formLogin(form -> form
                 .loginPage("/login")
                 .defaultSuccessUrl("/products")
