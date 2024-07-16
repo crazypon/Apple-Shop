@@ -1,0 +1,34 @@
+
+services:
+  apple_crypto:
+    build: .
+    container_name: apple_crypto_container
+    depends_on:
+      - apple_crypto_db
+      - apple_crypto_redis
+    ports:
+      - 8080:8080
+    environment:
+    # this should be added even it is in application.yml
+      db-url: jdbc:postgresql//apple_crypto_db:5433/apple_crypto
+      db-username: jarvis
+      db-password: ilnur@089
+      SPRING_DATA_REDIS_HOST: apple_crypto_redis
+      SPRING_DATA_REDIS_PORT: 6379
+    restart: always
+
+  apple_crypto_db:
+    image: postgres
+    restart: always
+    ports:
+    # this port is busy by postgres on my pc that's why it's custom
+      - 5433:5433
+    environment:
+      POSTGRES_USER: jarvis
+      POSTGRES_PASSWORD: ilnur@089
+      POSTGRES_DB: apple_crypto
+  
+  apple_crypto_redis:
+    image: redis:latest
+    ports:
+      - 6380:6379

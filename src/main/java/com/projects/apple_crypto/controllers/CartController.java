@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.projects.apple_crypto.entities.Product;
 import com.projects.apple_crypto.entities.ProductRepo;
-import com.projects.apple_crypto.entities.UserRepository;
 
 import jakarta.servlet.http.HttpSession;
 
