@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Crypto</title>
+</head>
+<body>
+    <h2>Create Apple Product</h2>
+        <form th:action="@{addProduct}" th:object="${product}" method="POST" enctype="multipart/form-data">
+        <label for="image">Upload an Image of Product</label>
+        <input type="file" name="image" accept="image/*">
+        <label for="product_name">Enter Product Name: </label>
+        <input type="text" th:field="*{product_name}">
+        <label for="product_description">Enter Product Description: </label>
+        <input type="text" th:field="*{product_description}">
+        <label for="price">Enter Product Price: </label>
+        <input type="text" th:field="*{price}">
+        <label for="ram">Enter Product Ram: </label>
+        <input type="text" th:field="*{ram}">
+        <label for="ssd">Enter Product SSD: </label>
+        <input type="text" th:field="*{ssd}">
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

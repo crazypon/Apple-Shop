@@ -9,13 +9,11 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
 @AllArgsConstructor
-@RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force=true)
+@NoArgsConstructor(access = AccessLevel.PUBLIC, force=true)
 @Table(name="apple_products")
 public class Product {
 
@@ -23,10 +21,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private final String product_name;
-    private final String product_description;
-    private final Integer price;
-    private final Integer ssd;
-    private final Integer ram;
+    private String product_name;
+    private String product_description;
+    private Integer price;
+    private Integer ssd;
+    private Integer ram;
+    private String imagePath;
 }
 

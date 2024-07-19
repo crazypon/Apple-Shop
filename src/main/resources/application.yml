@@ -2,14 +2,21 @@ spring:
     redis:
         host: localhost
         port: 6380
+
     datasource:
         hikari:
             connectionTimeout: 20000
             maximumPoolSize: 5
-        url: jdbc:postgresql://apple_crypto_db:5432/apple_crypto
+        url: jdbc:postgresql://localhost:5432/apple_crypto
         username: jarvis
         password: ilnur@089
         initialize: false
+
+    rabbitmq:
+        host: localhost
+        password: 1234
+        username: rab
+        virtual-host: vhost        
 
     jpa:
         hibernate:
@@ -21,6 +28,16 @@ spring:
     sql:
         init:
             mode: always
+    
+    servlet:
+        multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB
+
+    server:
+        tomcat:
+            max-swallow-size: 100MB
+
 
 
 security:
